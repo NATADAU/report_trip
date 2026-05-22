@@ -148,6 +148,17 @@
   </div>
 
   <button type="button" class="btn-main gray" onclick="saveSettings()">Сохранить и перейти к отчёту →</button>
+  <button type="button" class="btn-secondary" onclick="generateLink()">🔗 Получить ссылку для участников</button>
+
+  <div id="link-result" style="display:none;">
+    <div class="card" style="margin-top:0;">
+      <div class="card-header"><div class="card-icon gray">🔗</div><h2>Ссылка для участников</h2></div>
+      <div style="background:#F7F9FC;border-radius:12px;padding:14px;border:1px solid var(--border);font-size:13px;color:var(--text);word-break:break-all;line-height:1.6;" id="link-text"></div>
+      <button type="button" class="btn-main gray" style="margin-top:12px;font-size:15px;" onclick="copyLink()">
+        <span id="link-copy-icon">📋</span> <span id="link-copy-label">Скопировать ссылку</span>
+      </button>
+    </div>
+  </div>
 
 </div>
 </div>
@@ -287,6 +298,22 @@
     <div class="field">
       <label class="field-label">Незапланированные расходы</label>
       <textarea id="c-budget" placeholder="Суммы, квитанции, причины..."></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon blue">📦</div><h2>Работа ЦЛП</h2></div>
+    <div class="field">
+      <label class="field-label">Предложения ЦЛП по улучшению ситуации в организации(-ях)</label>
+      <textarea id="c-proposals" placeholder="Что предложили по итогам визита: изменения, рекомендации, новые подходы..."></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label">Что ЦЛП обещал сделать / чем помочь</label>
+      <textarea id="c-promises" placeholder="Какие материалы прислать, кого пригласить, что организовать..."></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label">Материалы и книги — что передали и кому</label>
+      <textarea id="c-materials" placeholder="Название материала / книги — кому передали..."></textarea>
     </div>
   </div>
 
@@ -511,6 +538,81 @@
 
 <script>
 var cfg = { event:'', city:'', coordinator:'', email:'', days:[], speakers:[] };
+
+// Загрузить настройки из URL (если есть — участник открыл ссылку от координатора)
+(function() {
+  try {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('event')) {
+      cfg.event       = params.get('event') || '';
+      cfg.city        = params.get('city')  || '';
+      cfg.coordinator = params.get('coord') || '';
+      cfg.email       = params.get('email') || '';
+      cfg.days        = params.get('days')     ? params.get('days').split('|')     : [];
+      cfg.speakers    = params.get('speakers') ? params.get('speakers').split('|') : [];
+
+      // Заполнить поля настроек
+      document.getElementById('s-event').value       = cfg.event;
+      document.getElementById('s-city').value        = cfg.city;
+      document.getElementById('s-coordinator').value = cfg.coordinator;
+      document.getElementById('s-email').value       = cfg.email;
+      cfg.days.forEach(function(d)     { addListItem('days-editor',     'day',     d); });
+      cfg.speakers.forEach(function(s) { addListItem('speakers-editor', 'speaker', s); });
+
+      // Сразу показать форму
+      if (cfg.days.length) {
+        buildDayButtons('c-day-group', 'blue');
+        buildDayButtons('p-day-group', 'green');
+        buildSpeakerCheckboxes();
+        if (cfg.email) {
+          document.getElementById('c-email').value = cfg.email;
+          document.getElementById('p-email').value = cfg.email;
+        }
+        document.getElementById('main-header').className = 'header blue';
+        document.getElementById('header-title').textContent = 'Отчёт координатора';
+        document.getElementById('header-sub').textContent   = cfg.event + ' · ' + cfg.city;
+        document.getElementById('screen-setup').classList.remove('active');
+        document.getElementById('screen-form').classList.add('active');
+        return; // не читать localStorage
+      }
+    }
+  } catch(e) {}
+})();
+
+// Загрузить сохранённые настройки
+(function() {
+  try {
+    var saved = localStorage.getItem('clp_cfg');
+    if (saved) {
+      var parsed = JSON.parse(saved);
+      cfg = parsed;
+      // Заполнить поля настроек
+      document.getElementById('s-event').value       = cfg.event       || '';
+      document.getElementById('s-city').value        = cfg.city        || '';
+      document.getElementById('s-coordinator').value = cfg.coordinator || '';
+      document.getElementById('s-email').value       = cfg.email       || '';
+      // Заполнить списки дней и спикеров
+      cfg.days.forEach(function(d)     { addListItem('days-editor',     'day',     d); });
+      cfg.speakers.forEach(function(s) { addListItem('speakers-editor', 'speaker', s); });
+
+      // Если настройки уже есть — сразу открыть форму
+      if (cfg.days.length) {
+        buildDayButtons('c-day-group', 'blue');
+        buildDayButtons('p-day-group', 'green');
+        buildSpeakerCheckboxes();
+        if (cfg.email) {
+          document.getElementById('c-email').value = cfg.email;
+          document.getElementById('p-email').value = cfg.email;
+        }
+        document.getElementById('main-header').className = 'header blue';
+        document.getElementById('header-title').textContent = 'Отчёт координатора';
+        document.getElementById('header-sub').textContent   = cfg.event + ' · ' + cfg.city;
+        document.getElementById('screen-setup').classList.remove('active');
+        document.getElementById('screen-form').classList.add('active');
+      }
+    }
+  } catch(e) {}
+})();
 var radioValues = {};
 var starValues  = {};
 var scaleValues = {};
@@ -535,6 +637,45 @@ function getListValues(editorId) {
   return vals;
 }
 
+function generateLink() {
+  var event       = document.getElementById('s-event').value.trim()       || 'Семинар';
+  var city        = document.getElementById('s-city').value.trim()        || 'Город';
+  var coordinator = document.getElementById('s-coordinator').value.trim() || 'Координатор';
+  var email       = document.getElementById('s-email').value.trim();
+  var days        = getListValues('days-editor');
+  var speakers    = getListValues('speakers-editor');
+
+  if (!days.length) { alert('Добавь хотя бы один день поездки'); return; }
+
+  var params = new URLSearchParams();
+  params.set('event', event);
+  params.set('city', city);
+  params.set('coord', coordinator);
+  if (email) params.set('email', email);
+  params.set('days', days.join('|'));
+  if (speakers.length) params.set('speakers', speakers.join('|'));
+
+  var link = window.location.origin + window.location.pathname + '?' + params.toString();
+  document.getElementById('link-text').textContent = link;
+  document.getElementById('link-result').style.display = 'block';
+  document.getElementById('link-result').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function copyLink() {
+  var text = document.getElementById('link-text').textContent;
+  function onCopied() {
+    document.getElementById('link-copy-icon').textContent = '✅';
+    document.getElementById('link-copy-label').textContent = 'Скопировано!';
+    setTimeout(function() {
+      document.getElementById('link-copy-icon').textContent = '📋';
+      document.getElementById('link-copy-label').textContent = 'Скопировать ссылку';
+    }, 2200);
+  }
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(onCopied).catch(function() { fbCopy(text); onCopied(); });
+  } else { fbCopy(text); onCopied(); }
+}
+
 function saveSettings() {
   cfg.event       = document.getElementById('s-event').value.trim()       || 'Семинар';
   cfg.city        = document.getElementById('s-city').value.trim()        || 'Город';
@@ -544,6 +685,9 @@ function saveSettings() {
   cfg.speakers    = getListValues('speakers-editor');
 
   if (!cfg.days.length) { alert('Добавь хотя бы один день поездки'); return; }
+
+  // Сохранить в localStorage
+  try { localStorage.setItem('clp_cfg', JSON.stringify(cfg)); } catch(e) {}
 
   // обновить заголовок
   document.getElementById('main-header').className = 'header blue';
@@ -707,6 +851,14 @@ function generateCoord() {
     r += line('Инциденты', rv('c-incidents-group'));
     if (v('c-incidents-detail')) r += v('c-incidents-detail') + '\n';
     if (v('c-budget'))           r += 'Расходы: ' + v('c-budget') + '\n';
+    r += '\n';
+  }
+
+  if (v('c-proposals') || v('c-promises') || v('c-materials')) {
+    r += 'РАБОТА ЦЛП\n';
+    if (v('c-proposals')) r += 'Предложения по улучшению: ' + v('c-proposals') + '\n';
+    if (v('c-promises'))  r += 'Обещания и помощь: '        + v('c-promises')  + '\n';
+    if (v('c-materials')) r += 'Переданные материалы: '     + v('c-materials') + '\n';
     r += '\n';
   }
 
