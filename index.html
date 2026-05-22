@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Отчёт — Пространство Новых Идей 2.0</title>
+<title>Отчёт координатора</title>
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -17,18 +18,17 @@
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: 'Geologica', -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  /* HEADER */
   .header { padding: 20px 20px 24px; position: relative; overflow: hidden; }
-  .header.blue { background: var(--blue); }
+  .header.gray  { background: #4B5563; }
+  .header.blue  { background: var(--blue); }
   .header.green { background: var(--green); }
   .header::after { content:''; position:absolute; right:-30px; bottom:-30px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,0.07); }
   .header h1 { font-size:21px; font-weight:700; color:#fff; letter-spacing:-0.3px; position:relative; }
-  .header p { font-size:13px; color:rgba(255,255,255,0.65); margin-top:4px; position:relative; }
+  .header p  { font-size:13px; color:rgba(255,255,255,0.65); margin-top:4px; position:relative; }
 
-  /* ROLE SWITCHER */
-  .role-switcher { display:flex; gap:0; background:#fff; border-radius:14px; padding:4px; margin: 16px 16px 0; box-shadow: var(--shadow); }
-  .role-btn { flex:1; padding:11px 8px; border:none; border-radius:10px; font-size:14px; font-weight:600; font-family:inherit; cursor:pointer; background:transparent; color:var(--text-soft); transition:all 0.2s; }
-  .role-btn.active-blue { background:var(--blue); color:#fff; box-shadow:0 2px 8px rgba(27,95,168,0.3); }
+  .role-switcher { display:flex; gap:0; background:#fff; border-radius:14px; padding:4px; margin:16px 16px 0; box-shadow:var(--shadow); }
+  .role-btn { flex:1; padding:11px 8px; border:none; border-radius:10px; font-size:14px; font-weight:600; font-family:inherit; cursor:pointer; background:transparent; color:var(--text-soft); }
+  .role-btn.active-blue  { background:var(--blue);  color:#fff; box-shadow:0 2px 8px rgba(27,95,168,0.3); }
   .role-btn.active-green { background:var(--green); color:#fff; box-shadow:0 2px 8px rgba(15,123,78,0.3); }
 
   .content { padding:16px; display:flex; flex-direction:column; gap:12px; }
@@ -36,93 +36,132 @@
   .card { background:var(--card); border-radius:var(--radius-card); padding:18px; box-shadow:var(--shadow); border:1px solid rgba(0,0,0,0.04); }
   .card-header { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
   .card-icon { width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
-  .card-icon.blue { background:var(--blue-light); }
+  .card-icon.blue  { background:var(--blue-light); }
   .card-icon.green { background:var(--green-light); }
-  .card h2 { font-size:15px; font-weight:600; color:var(--text); letter-spacing:-0.2px; }
+  .card-icon.gray  { background:#F3F4F6; }
+  .card h2 { font-size:15px; font-weight:600; color:var(--text); }
 
   .field { margin-bottom:14px; }
   .field:last-child { margin-bottom:0; }
   label.field-label { display:block; font-size:13px; font-weight:500; color:var(--text-soft); margin-bottom:8px; }
 
-  input[type=text], textarea {
+  input[type=text], input[type=email], textarea {
     width:100%; padding:13px 14px; border:1.5px solid var(--border); border-radius:12px;
-    font-size:15px; font-family:inherit; color:var(--text); background:#FAFBFF;
-    outline:none; -webkit-appearance:none;
+    font-size:15px; font-family:inherit; color:var(--text); background:#FAFBFF; outline:none; -webkit-appearance:none;
   }
-  input[type=text]:focus, textarea:focus { border-color:var(--blue-mid); background:#fff; }
+  input[type=text]:focus, input[type=email]:focus, textarea:focus { border-color:var(--blue-mid); background:#fff; }
   textarea { resize:vertical; min-height:80px; line-height:1.55; }
 
-  /* RADIO */
   .radio-group { display:flex; gap:8px; flex-wrap:wrap; }
-  .radio-btn {
-    padding:11px 18px; border:1.5px solid var(--border); border-radius:50px;
-    font-size:15px; font-weight:500; cursor:pointer; background:#FAFBFF;
-    color:var(--text-soft); font-family:inherit; min-height:44px;
-    display:inline-flex; align-items:center; -webkit-appearance:none; outline:none;
-  }
-  .radio-btn.active-blue { background:var(--blue); color:#fff; border-color:var(--blue); box-shadow:0 4px 12px rgba(27,95,168,0.25); }
+  .radio-btn { padding:11px 18px; border:1.5px solid var(--border); border-radius:50px; font-size:15px; font-weight:500; cursor:pointer; background:#FAFBFF; color:var(--text-soft); font-family:inherit; min-height:44px; display:inline-flex; align-items:center; -webkit-appearance:none; outline:none; }
+  .radio-btn.active-blue  { background:var(--blue);  color:#fff; border-color:var(--blue);  box-shadow:0 4px 12px rgba(27,95,168,0.25); }
   .radio-btn.active-green { background:var(--green); color:#fff; border-color:var(--green); box-shadow:0 4px 12px rgba(15,123,78,0.25); }
 
-  /* STAR RATING */
+  .scale-row { display:flex; gap:6px; flex-wrap:wrap; }
+  .scale-btn { width:44px; height:44px; border-radius:10px; border:1.5px solid var(--border); background:#FAFBFF; font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; color:var(--text-soft); display:flex; align-items:center; justify-content:center; -webkit-appearance:none; outline:none; }
+  .scale-btn.active-green { background:var(--green); color:#fff; border-color:var(--green); }
+  .scale-btn.active-blue  { background:var(--blue);  color:#fff; border-color:var(--blue); }
+
   .star-row { display:flex; gap:6px; }
-  .star-btn { font-size:28px; cursor:pointer; background:none; border:none; padding:4px; line-height:1; filter:grayscale(1) opacity(0.4); transition:filter 0.15s; }
+  .star-btn { font-size:28px; cursor:pointer; background:none; border:none; padding:4px; line-height:1; filter:grayscale(1) opacity(0.4); }
   .star-btn.lit { filter:none; }
 
-  /* SCALE */
-  .scale-row { display:flex; gap:6px; flex-wrap:wrap; }
-  .scale-btn {
-    width:44px; height:44px; border-radius:10px; border:1.5px solid var(--border);
-    background:#FAFBFF; font-size:15px; font-weight:600; cursor:pointer;
-    font-family:inherit; color:var(--text-soft); display:flex; align-items:center; justify-content:center;
-    -webkit-appearance:none; outline:none;
-  }
-  .scale-btn.active-blue { background:var(--blue); color:#fff; border-color:var(--blue); }
-  .scale-btn.active-green { background:var(--green); color:#fff; border-color:var(--green); }
-
-  /* CHECKBOXES */
   .checkbox-list { display:flex; flex-direction:column; }
   .checkbox-item { display:flex; align-items:center; gap:12px; font-size:15px; cursor:pointer; padding:11px 0; border-bottom:1px solid var(--border); color:var(--text); }
   .checkbox-item:last-child { border-bottom:none; padding-bottom:0; }
   .checkbox-item:first-child { padding-top:0; }
   .checkbox-item input[type=checkbox] { width:22px; height:22px; cursor:pointer; flex-shrink:0; accent-color:var(--blue); }
 
-  /* BUTTONS */
-  .btn-generate { width:100%; padding:17px; color:white; border:none; border-radius:var(--radius-btn); font-size:17px; font-weight:600; font-family:inherit; cursor:pointer; min-height:56px; }
-  .btn-generate.blue { background:var(--blue); box-shadow:0 6px 20px rgba(27,95,168,0.3); }
-  .btn-generate.green { background:var(--green); box-shadow:0 6px 20px rgba(15,123,78,0.3); }
-  .btn-generate:active { opacity:0.88; }
+  /* list editor for days/speakers */
+  .list-editor { display:flex; flex-direction:column; gap:8px; }
+  .list-row { display:flex; gap:8px; align-items:center; }
+  .list-row input { flex:1; }
+  .btn-remove { width:36px; height:36px; border-radius:50%; border:1.5px solid #fca5a5; background:#fff; color:#ef4444; font-size:20px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:inherit; }
+  .btn-add-item { padding:10px 14px; border:1.5px dashed var(--blue-mid); border-radius:10px; background:var(--blue-light); color:var(--blue); font-size:14px; font-weight:500; cursor:pointer; font-family:inherit; width:100%; margin-top:4px; }
 
-  .result-card { display:none; }
-  #result-text, #result-text-p { white-space:pre-wrap; font-size:14px; line-height:1.75; background:#F7F9FC; border-radius:12px; padding:16px; border:1px solid var(--border); color:var(--text); max-height:360px; overflow-y:auto; }
+  .btn-main { width:100%; padding:17px; color:white; border:none; border-radius:var(--radius-btn); font-size:17px; font-weight:600; font-family:inherit; cursor:pointer; min-height:56px; }
+  .btn-main.blue  { background:var(--blue);  box-shadow:0 6px 20px rgba(27,95,168,0.3); }
+  .btn-main.green { background:var(--green); box-shadow:0 6px 20px rgba(15,123,78,0.3); }
+  .btn-main.gray  { background:#4B5563; box-shadow:0 4px 14px rgba(0,0,0,0.15); }
+  .btn-main:active { opacity:0.88; }
 
-  .btn-copy { width:100%; padding:15px; background:#fff; border:2px solid; border-radius:var(--radius-btn); font-size:16px; font-weight:600; font-family:inherit; cursor:pointer; margin-top:12px; min-height:52px; display:flex; align-items:center; justify-content:center; gap:8px; }
-  .btn-copy.blue { color:var(--blue); border-color:var(--blue); }
-  .btn-copy.green { color:var(--green); border-color:var(--green); }
-  .btn-copy:active { opacity:0.85; }
-  .btn-copy.copied { background:#E6F4EA; color:#1E7E34; border-color:#1E7E34; }
+  .btn-secondary { width:100%; padding:13px; background:#fff; color:#555; border:1.5px solid var(--border); border-radius:var(--radius-btn); font-size:15px; font-family:inherit; cursor:pointer; margin-top:8px; min-height:48px; }
+  .btn-secondary:active { background:#f5f5f5; }
 
-  .btn-reset { width:100%; padding:13px; background:#fff; color:#888; border:1.5px solid var(--border); border-radius:var(--radius-btn); font-size:15px; font-family:inherit; cursor:pointer; margin-top:8px; min-height:48px; }
-  .btn-reset:active { background:#f5f5f5; }
+  .btn-outline-blue  { width:100%; padding:15px; background:#fff; color:var(--blue);  border:2px solid var(--blue);  border-radius:var(--radius-btn); font-size:16px; font-weight:600; font-family:inherit; cursor:pointer; min-height:52px; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
+  .btn-outline-green { width:100%; padding:15px; background:#fff; color:var(--green); border:2px solid var(--green); border-radius:var(--radius-btn); font-size:16px; font-weight:600; font-family:inherit; cursor:pointer; min-height:52px; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
+  .btn-outline-blue:active, .btn-outline-green:active { opacity:0.85; }
+  .btn-outline-blue.copied, .btn-outline-green.copied { background:#E6F4EA; color:#1E7E34; border-color:#1E7E34; }
+
+  .result-text { white-space:pre-wrap; font-size:14px; line-height:1.75; background:#F7F9FC; border-radius:12px; padding:16px; border:1px solid var(--border); color:var(--text); max-height:360px; overflow-y:auto; }
 
   .screen { display:none; }
   .screen.active { display:block; }
+
+  .settings-hint { font-size:12px; color:var(--text-soft); background:var(--blue-light); border-radius:10px; padding:10px 12px; margin-bottom:4px; }
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
-<div class="header blue" id="main-header">
-  <h1 id="header-title">Отчёт координатора</h1>
-  <p>Семинар «Пространство Новых Идей 2.0» · Ижевск 2026</p>
+<div class="header gray" id="main-header">
+  <h1 id="header-title">Настройка отчёта</h1>
+  <p id="header-sub">Заполни один раз — используй всегда</p>
 </div>
 
-<!-- ПЕРЕКЛЮЧАТЕЛЬ РОЛЕЙ -->
+<!-- ===================== ЭКРАН НАСТРОЕК ===================== -->
+<div class="screen active" id="screen-setup">
+<div class="content">
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon gray">⚙️</div><h2>О мероприятии</h2></div>
+    <div class="field">
+      <label class="field-label">Название семинара / события</label>
+      <input type="text" id="s-event" placeholder="Пространство Новых Идей 2.0">
+    </div>
+    <div class="field">
+      <label class="field-label">Город / место</label>
+      <input type="text" id="s-city" placeholder="Ижевск">
+    </div>
+    <div class="field">
+      <label class="field-label">Имя координатора</label>
+      <input type="text" id="s-coordinator" placeholder="Иванова Анна">
+    </div>
+    <div class="field">
+      <label class="field-label">Email для отчётов (по умолчанию)</label>
+      <input type="email" id="s-email" placeholder="report@organization.ru">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon gray">📅</div><h2>Дни поездки</h2></div>
+    <p class="settings-hint">Например: «26 мая — перелёт» или «27 мая — Казань»</p>
+    <div class="list-editor" id="days-editor"></div>
+    <button type="button" class="btn-add-item" onclick="addListItem('days-editor', 'day', '')">+ Добавить день</button>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon gray">🎤</div><h2>Спикеры ЦЛП</h2></div>
+    <p class="settings-hint">Имена спикеров, которые участвуют в программе</p>
+    <div class="list-editor" id="speakers-editor"></div>
+    <button type="button" class="btn-add-item" onclick="addListItem('speakers-editor', 'speaker', '')">+ Добавить спикера</button>
+  </div>
+
+  <button type="button" class="btn-main gray" onclick="saveSettings()">Сохранить и перейти к отчёту →</button>
+
+</div>
+</div>
+
+<!-- ===================== ЭКРАН ФОРМЫ ===================== -->
+<div class="screen" id="screen-form">
+
+<!-- переключатель -->
 <div class="role-switcher">
   <button type="button" class="role-btn active-blue" id="btn-role-coord" onclick="switchRole('coord')">🗂 Координатор</button>
-  <button type="button" class="role-btn" id="btn-role-part" onclick="switchRole('part')">👤 Участник</button>
+  <button type="button" class="role-btn" id="btn-role-part"  onclick="switchRole('part')">👤 Участник</button>
 </div>
 
-<!-- ======================== КООРДИНАТОР ======================== -->
+<!-- ==== КООРДИНАТОР ==== -->
 <div class="screen active" id="screen-coord">
 <div class="content">
 
@@ -130,19 +169,14 @@
     <div class="card-header"><div class="card-icon blue">📋</div><h2>Основное</h2></div>
     <div class="field">
       <label class="field-label">День поездки</label>
-      <div class="radio-group" id="c-day-group">
-        <button type="button" class="radio-btn" data-value="26 мая — перелёт">26 мая</button>
-        <button type="button" class="radio-btn" data-value="27 мая — Ижевск">27 мая</button>
-        <button type="button" class="radio-btn" data-value="28 мая — Сарапул">28 мая</button>
-        <button type="button" class="radio-btn" data-value="29 мая — Воткинск">29 мая</button>
-      </div>
+      <div class="radio-group" id="c-day-group"></div>
     </div>
   </div>
 
   <div class="card">
     <div class="card-header"><div class="card-icon blue">🚌</div><h2>Логистика</h2></div>
     <div class="field">
-      <label class="field-label">Все ли добрались по плану?</label>
+      <label class="field-label">Все добрались по плану?</label>
       <div class="radio-group" id="c-arrived-group">
         <button type="button" class="radio-btn" data-value="Да, все по плану">Да, всё ок</button>
         <button type="button" class="radio-btn" data-value="Были сложности">Были сложности</button>
@@ -150,10 +184,10 @@
     </div>
     <div class="field">
       <label class="field-label">Подробности (если были сложности)</label>
-      <textarea id="c-logistics-detail" placeholder="Опиши что случилось..."></textarea>
+      <textarea id="c-logistics-detail" placeholder="Задержки, проблемы с транспортом..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">Трансферы прошли по расписанию?</label>
+      <label class="field-label">Трансферы по расписанию?</label>
       <div class="radio-group" id="c-transfer-group">
         <button type="button" class="radio-btn" data-value="Да">Да</button>
         <button type="button" class="radio-btn" data-value="С задержкой">С задержкой</button>
@@ -161,7 +195,7 @@
       </div>
     </div>
     <div class="field">
-      <label class="field-label">Размещение прошло без проблем?</label>
+      <label class="field-label">Размещение без проблем?</label>
       <div class="radio-group" id="c-hotel-group">
         <button type="button" class="radio-btn" data-value="Да">Да</button>
         <button type="button" class="radio-btn" data-value="Были вопросы">Были вопросы</button>
@@ -184,24 +218,18 @@
     </div>
     <div class="field">
       <label class="field-label">Что изменилось / как прошло?</label>
-      <textarea id="c-program-detail" placeholder="Изменения в расписании, отмены, переносы..."></textarea>
+      <textarea id="c-program-detail" placeholder="Изменения, отмены, переносы..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">Выступления спикеров ЦЛП прошли:</label>
-      <div class="checkbox-list">
-        <label class="checkbox-item"><input type="checkbox" id="c-s-bitova"> Битова А.Л.</label>
-        <label class="checkbox-item"><input type="checkbox" id="c-s-portnova"> Портнова А.А.</label>
-        <label class="checkbox-item"><input type="checkbox" id="c-s-zabl"> Заблоцкис Е.Ю.</label>
-        <label class="checkbox-item"><input type="checkbox" id="c-s-kantor"> Кантор П.Ю.</label>
-        <label class="checkbox-item"><input type="checkbox" id="c-s-sisneva"> Сиснёва М.Е.</label>
-      </div>
+      <label class="field-label">Выступления спикеров прошли:</label>
+      <div class="checkbox-list" id="c-speakers-list"></div>
     </div>
   </div>
 
   <div class="card">
     <div class="card-header"><div class="card-icon blue">👥</div><h2>Участники</h2></div>
     <div class="field">
-      <label class="field-label">Самочувствие и настрой делегации</label>
+      <label class="field-label">Настрой делегации</label>
       <div class="radio-group" id="c-mood-group">
         <button type="button" class="radio-btn" data-value="Отличное">Отличное</button>
         <button type="button" class="radio-btn" data-value="Хорошее">Хорошее</button>
@@ -210,29 +238,21 @@
       </div>
     </div>
     <div class="field">
-      <label class="field-label">Особые ситуации с участниками</label>
-      <textarea id="c-participants-detail" placeholder="Кто-то заболел, опоздал, особые просьбы..."></textarea>
-    </div>
-    <div class="field">
-      <label class="field-label">Вовлечённость участников в программу</label>
+      <label class="field-label">Вовлечённость в программу</label>
       <div class="radio-group" id="c-engagement-group">
         <button type="button" class="radio-btn" data-value="Высокая">Высокая</button>
         <button type="button" class="radio-btn" data-value="Средняя">Средняя</button>
         <button type="button" class="radio-btn" data-value="Низкая">Низкая</button>
       </div>
     </div>
+    <div class="field">
+      <label class="field-label">Особые ситуации с участниками</label>
+      <textarea id="c-participants-detail" placeholder="Кто-то заболел, опоздал, особые просьбы..."></textarea>
+    </div>
   </div>
 
   <div class="card">
     <div class="card-header"><div class="card-icon blue">🤝</div><h2>Коммуникация</h2></div>
-    <div class="field">
-      <label class="field-label">Новые контакты / договорённости с принимающей стороной</label>
-      <textarea id="c-contacts-detail" placeholder="С кем познакомились, о чём договорились..."></textarea>
-    </div>
-    <div class="field">
-      <label class="field-label">Встреча с НКО — если прошла</label>
-      <textarea id="c-nko-detail" placeholder="Кто пришёл, как прошло, какие вопросы обсуждали..."></textarea>
-    </div>
     <div class="field">
       <label class="field-label">Реакция принимающей стороны</label>
       <div class="radio-group" id="c-reception-group">
@@ -241,12 +261,20 @@
         <button type="button" class="radio-btn" data-value="Напряжённая">Напряжённая</button>
       </div>
     </div>
+    <div class="field">
+      <label class="field-label">Новые контакты / договорённости</label>
+      <textarea id="c-contacts-detail" placeholder="С кем познакомились, о чём договорились..."></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label">Встреча с НКО — если прошла</label>
+      <textarea id="c-nko-detail" placeholder="Кто пришёл, как прошло..."></textarea>
+    </div>
   </div>
 
   <div class="card">
-    <div class="card-header"><div class="card-icon blue">⚠️</div><h2>Риски и инциденты</h2></div>
+    <div class="card-header"><div class="card-icon blue">⚠️</div><h2>Риски и расходы</h2></div>
     <div class="field">
-      <label class="field-label">Были ли инциденты, требующие внимания?</label>
+      <label class="field-label">Инциденты, требующие внимания?</label>
       <div class="radio-group" id="c-incidents-group">
         <button type="button" class="radio-btn" data-value="Нет">Нет</button>
         <button type="button" class="radio-btn" data-value="Да">Да</button>
@@ -257,20 +285,20 @@
       <textarea id="c-incidents-detail" placeholder="Конфликты, жалобы, нештатные ситуации..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">Бюджет / расходы дня</label>
-      <textarea id="c-budget" placeholder="Незапланированные расходы, квитанции, суммы..."></textarea>
+      <label class="field-label">Незапланированные расходы</label>
+      <textarea id="c-budget" placeholder="Суммы, квитанции, причины..."></textarea>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-header"><div class="card-icon blue">🔜</div><h2>На завтра</h2></div>
+    <div class="card-header"><div class="card-icon blue">🔜</div><h2>Итог дня</h2></div>
     <div class="field">
-      <label class="field-label">Открытые вопросы / что нужно решить</label>
-      <textarea id="c-tomorrow-detail" placeholder="Что требует внимания завтра..."></textarea>
+      <label class="field-label">Открытые вопросы на завтра</label>
+      <textarea id="c-tomorrow-detail" placeholder="Что требует внимания..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">Общий итог дня</label>
-      <textarea id="c-summary" placeholder="Главное впечатление, общая оценка дня..."></textarea>
+      <label class="field-label">Общее впечатление</label>
+      <textarea id="c-summary" placeholder="Главное за день..."></textarea>
     </div>
     <div class="field">
       <label class="field-label">Оценка дня</label>
@@ -284,21 +312,28 @@
     </div>
   </div>
 
-  <button type="button" class="btn-generate blue" onclick="generateCoord()">Сформировать отчёт</button>
+  <button type="button" class="btn-main blue" onclick="generateCoord()">Сформировать отчёт</button>
 
-  <div class="card result-card" id="c-result-card">
+  <div class="card" id="c-result-card" style="display:none;">
     <div class="card-header"><div class="card-icon blue">✅</div><h2>Готовый отчёт</h2></div>
-    <div id="result-text"></div>
-    <button type="button" class="btn-copy blue" id="c-btn-copy" onclick="copyReport('result-text','c-btn-copy','c-copy-label','c-copy-icon')">
-      <span id="c-copy-icon">📋</span><span id="c-copy-label">Скопировать</span>
+    <div class="result-text" id="c-result-text"></div>
+    <div class="field" style="margin-top:14px;">
+      <label class="field-label">Email для отправки</label>
+      <input type="email" id="c-email" placeholder="example@mail.ru">
+    </div>
+    <button type="button" class="btn-main blue" style="margin-top:4px;" onclick="sendEmail('c-result-text','c-email')">✉️ Отправить на email</button>
+    <button type="button" class="btn-outline-blue" id="c-btn-copy" onclick="copyReport('c-result-text','c-btn-copy','c-copy-label','c-copy-icon')">
+      <span id="c-copy-icon">📋</span><span id="c-copy-label">Скопировать текст</span>
     </button>
-    <button type="button" class="btn-reset" onclick="resetForm('coord')">Начать заново</button>
+    <button type="button" class="btn-secondary" onclick="resetForm('coord')">Начать заново</button>
   </div>
 
+  <button type="button" class="btn-secondary" onclick="goToSettings()">⚙️ Изменить настройки</button>
+
 </div>
 </div>
 
-<!-- ======================== УЧАСТНИК ======================== -->
+<!-- ==== УЧАСТНИК ==== -->
 <div class="screen" id="screen-part">
 <div class="content">
 
@@ -310,12 +345,7 @@
     </div>
     <div class="field">
       <label class="field-label">День поездки</label>
-      <div class="radio-group" id="p-day-group">
-        <button type="button" class="radio-btn" data-value="26 мая — перелёт">26 мая</button>
-        <button type="button" class="radio-btn" data-value="27 мая — Ижевск">27 мая</button>
-        <button type="button" class="radio-btn" data-value="28 мая — Сарапул">28 мая</button>
-        <button type="button" class="radio-btn" data-value="29 мая — Воткинск">29 мая</button>
-      </div>
+      <div class="radio-group" id="p-day-group"></div>
     </div>
   </div>
 
@@ -329,20 +359,20 @@
       </div>
     </div>
     <div class="field">
-      <label class="field-label">Что было не так с логистикой?</label>
-      <textarea id="p-logistics-detail" placeholder="Задержки, потеря багажа, проблемы с транспортом..."></textarea>
+      <label class="field-label">Что было не так?</label>
+      <textarea id="p-logistics-detail" placeholder="Задержки, потеря багажа..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">Размещение (отель / жильё)</label>
+      <label class="field-label">Размещение</label>
       <div class="radio-group" id="p-hotel-group">
-        <button type="button" class="radio-btn" data-value="Всё отлично">Отлично</button>
+        <button type="button" class="radio-btn" data-value="Отлично">Отлично</button>
         <button type="button" class="radio-btn" data-value="Нормально">Нормально</button>
-        <button type="button" class="radio-btn" data-value="Были проблемы">Были проблемы</button>
+        <button type="button" class="radio-btn" data-value="Были проблемы">Проблемы</button>
       </div>
     </div>
     <div class="field">
       <label class="field-label">Комментарий по размещению</label>
-      <textarea id="p-hotel-detail" placeholder="Что понравилось или нет, пожелания..."></textarea>
+      <textarea id="p-hotel-detail" placeholder="Что понравилось или нет..."></textarea>
     </div>
     <div class="field">
       <label class="field-label">Питание</label>
@@ -357,11 +387,11 @@
   <div class="card">
     <div class="card-header"><div class="card-icon green">📅</div><h2>Программа дня</h2></div>
     <div class="field">
-      <label class="field-label">Что посетил(-а) сегодня?</label>
-      <textarea id="p-attended" placeholder="Лекции, экскурсии, встречи, мастер-классы..."></textarea>
+      <label class="field-label">Что посетил(-а)?</label>
+      <textarea id="p-attended" placeholder="Лекции, экскурсии, встречи..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">Оценка программы дня</label>
+      <label class="field-label">Оценка программы (1–10)</label>
       <div class="scale-row" id="p-program-scale">
         <button type="button" class="scale-btn" data-val="1">1</button>
         <button type="button" class="scale-btn" data-val="2">2</button>
@@ -376,28 +406,28 @@
       </div>
     </div>
     <div class="field">
-      <label class="field-label">Что было самым ценным в программе?</label>
-      <textarea id="p-best" placeholder="Выступление, встреча, момент который запомнился..."></textarea>
+      <label class="field-label">Самое ценное за день</label>
+      <textarea id="p-best" placeholder="Выступление, встреча, идея..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">Что можно улучшить в программе?</label>
-      <textarea id="p-improve-program" placeholder="Что было лишним, скучным или плохо организованным..."></textarea>
+      <label class="field-label">Что улучшить в программе?</label>
+      <textarea id="p-improve-program" placeholder="Что было лишним или плохо организованным..."></textarea>
     </div>
   </div>
 
   <div class="card">
     <div class="card-header"><div class="card-icon green">💡</div><h2>Инсайты и идеи</h2></div>
     <div class="field">
-      <label class="field-label">Главные мысли и открытия дня</label>
+      <label class="field-label">Главные мысли и открытия</label>
       <textarea id="p-insights" placeholder="Что узнал нового, что переосмыслил..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">Что хочу применить в своей работе?</label>
-      <textarea id="p-apply" placeholder="Конкретные идеи, практики, подходы..."></textarea>
+      <label class="field-label">Что хочу применить в работе?</label>
+      <textarea id="p-apply" placeholder="Конкретные идеи, практики..."></textarea>
     </div>
     <div class="field">
       <label class="field-label">Вопросы, которые возникли</label>
-      <textarea id="p-questions" placeholder="Что осталось непонятным или требует изучения..."></textarea>
+      <textarea id="p-questions" placeholder="Что осталось непонятным..."></textarea>
     </div>
   </div>
 
@@ -405,11 +435,11 @@
     <div class="card-header"><div class="card-icon green">🤝</div><h2>Контакты</h2></div>
     <div class="field">
       <label class="field-label">С кем познакомился(-ась)?</label>
-      <textarea id="p-contacts" placeholder="Имена, организации, о чём договорились..."></textarea>
+      <textarea id="p-contacts" placeholder="Имена, организации, договорённости..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">Потенциальные партнёрства или сотрудничество</label>
-      <textarea id="p-partners" placeholder="Кто может быть полезен для совместной работы..."></textarea>
+      <label class="field-label">Потенциальные партнёрства</label>
+      <textarea id="p-partners" placeholder="Кто может быть полезен..."></textarea>
     </div>
   </div>
 
@@ -435,7 +465,7 @@
     </div>
     <div class="field">
       <label class="field-label">Что помогло бы сделать день лучше?</label>
-      <textarea id="p-better" placeholder="Пожелания организаторам, логистике, программе..."></textarea>
+      <textarea id="p-better" placeholder="Пожелания организаторам..."></textarea>
     </div>
   </div>
 
@@ -457,74 +487,160 @@
     </div>
   </div>
 
-  <button type="button" class="btn-generate green" onclick="generatePart()">Сформировать отчёт</button>
+  <button type="button" class="btn-main green" onclick="generatePart()">Сформировать отчёт</button>
 
-  <div class="card result-card" id="p-result-card">
+  <div class="card" id="p-result-card" style="display:none;">
     <div class="card-header"><div class="card-icon green">✅</div><h2>Готовый отчёт</h2></div>
-    <div id="result-text-p"></div>
-    <button type="button" class="btn-copy green" id="p-btn-copy" onclick="copyReport('result-text-p','p-btn-copy','p-copy-label','p-copy-icon')">
-      <span id="p-copy-icon">📋</span><span id="p-copy-label">Скопировать</span>
+    <div class="result-text" id="p-result-text"></div>
+    <div class="field" style="margin-top:14px;">
+      <label class="field-label">Email для отправки</label>
+      <input type="email" id="p-email" placeholder="example@mail.ru">
+    </div>
+    <button type="button" class="btn-main green" style="margin-top:4px;" onclick="sendEmail('p-result-text','p-email')">✉️ Отправить на email</button>
+    <button type="button" class="btn-outline-green" id="p-btn-copy" onclick="copyReport('p-result-text','p-btn-copy','p-copy-label','p-copy-icon')">
+      <span id="p-copy-icon">📋</span><span id="p-copy-label">Скопировать текст</span>
     </button>
-    <button type="button" class="btn-reset" onclick="resetForm('part')">Начать заново</button>
+    <button type="button" class="btn-secondary" onclick="resetForm('part')">Начать заново</button>
   </div>
 
+  <button type="button" class="btn-secondary" onclick="goToSettings()">⚙️ Изменить настройки</button>
+
 </div>
 </div>
+</div><!-- /screen-form -->
 
 <script>
-// ---- ROLE SWITCH ----
-function switchRole(role) {
-  document.getElementById('screen-coord').classList.toggle('active', role === 'coord');
-  document.getElementById('screen-part').classList.toggle('active', role === 'part');
-  var h = document.getElementById('main-header');
-  var t = document.getElementById('header-title');
-  var bc = document.getElementById('btn-role-coord');
-  var bp = document.getElementById('btn-role-part');
-  if (role === 'coord') {
-    h.className = 'header blue';
-    t.textContent = 'Отчёт координатора';
-    bc.className = 'role-btn active-blue';
-    bp.className = 'role-btn';
-  } else {
-    h.className = 'header green';
-    t.textContent = 'Отчёт участника';
-    bc.className = 'role-btn';
-    bp.className = 'role-btn active-green';
-  }
+var cfg = { event:'', city:'', coordinator:'', email:'', days:[], speakers:[] };
+var radioValues = {};
+var starValues  = {};
+var scaleValues = {};
+
+// ===================== SETTINGS =====================
+function addListItem(editorId, prefix, value) {
+  var editor = document.getElementById(editorId);
+  var idx = editor.children.length;
+  var row = document.createElement('div');
+  row.className = 'list-row';
+  row.innerHTML = '<input type="text" placeholder="Введи значение..." value="' + value + '" id="' + prefix + '-' + idx + '">' +
+    '<button type="button" class="btn-remove" onclick="this.parentElement.remove()">×</button>';
+  editor.appendChild(row);
 }
 
-// ---- RADIO BUTTONS ----
-var radioValues = {};
+function getListValues(editorId) {
+  var vals = [];
+  document.querySelectorAll('#' + editorId + ' input[type=text]').forEach(function(inp) {
+    var v = inp.value.trim();
+    if (v) vals.push(v);
+  });
+  return vals;
+}
 
+function saveSettings() {
+  cfg.event       = document.getElementById('s-event').value.trim()       || 'Семинар';
+  cfg.city        = document.getElementById('s-city').value.trim()        || 'Город';
+  cfg.coordinator = document.getElementById('s-coordinator').value.trim() || 'Координатор';
+  cfg.email       = document.getElementById('s-email').value.trim();
+  cfg.days        = getListValues('days-editor');
+  cfg.speakers    = getListValues('speakers-editor');
+
+  if (!cfg.days.length) { alert('Добавь хотя бы один день поездки'); return; }
+
+  // обновить заголовок
+  document.getElementById('main-header').className = 'header blue';
+  document.getElementById('header-title').textContent = 'Отчёт координатора';
+  document.getElementById('header-sub').textContent   = cfg.event + ' · ' + cfg.city;
+
+  // заполнить плашки дней для обеих форм
+  buildDayButtons('c-day-group', 'blue');
+  buildDayButtons('p-day-group', 'green');
+
+  // заполнить чекбоксы спикеров
+  buildSpeakerCheckboxes();
+
+  // подставить email по умолчанию
+  if (cfg.email) {
+    document.getElementById('c-email').value = cfg.email;
+    document.getElementById('p-email').value = cfg.email;
+  }
+
+  // показать форму
+  document.getElementById('screen-setup').classList.remove('active');
+  document.getElementById('screen-form').classList.add('active');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function buildDayButtons(groupId, colorClass) {
+  var group = document.getElementById(groupId);
+  group.innerHTML = '';
+  cfg.days.forEach(function(day) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'radio-btn';
+    btn.dataset.value = day;
+    btn.textContent = day;
+    btn.addEventListener('click', function() {
+      group.querySelectorAll('.radio-btn').forEach(function(b) { b.classList.remove('active-blue','active-green'); });
+      btn.classList.add('active-' + colorClass);
+      radioValues[groupId] = btn.dataset.value;
+    });
+    group.appendChild(btn);
+  });
+}
+
+function buildSpeakerCheckboxes() {
+  var list = document.getElementById('c-speakers-list');
+  list.innerHTML = '';
+  cfg.speakers.forEach(function(sp, i) {
+    var label = document.createElement('label');
+    label.className = 'checkbox-item';
+    label.innerHTML = '<input type="checkbox" id="c-sp-' + i + '"> ' + sp;
+    list.appendChild(label);
+  });
+}
+
+function goToSettings() {
+  document.getElementById('screen-form').classList.remove('active');
+  document.getElementById('screen-setup').classList.add('active');
+  document.getElementById('main-header').className = 'header gray';
+  document.getElementById('header-title').textContent = 'Настройка отчёта';
+  document.getElementById('header-sub').textContent   = 'Заполни один раз — используй всегда';
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ===================== ROLE SWITCH =====================
+function switchRole(role) {
+  var isCoord = role === 'coord';
+  document.getElementById('screen-coord').classList.toggle('active', isCoord);
+  document.getElementById('screen-part').classList.toggle('active', !isCoord);
+  document.getElementById('main-header').className = 'header ' + (isCoord ? 'blue' : 'green');
+  document.getElementById('header-title').textContent = isCoord ? 'Отчёт координатора' : 'Отчёт участника';
+  document.getElementById('btn-role-coord').className = 'role-btn' + (isCoord ? ' active-blue' : '');
+  document.getElementById('btn-role-part').className  = 'role-btn' + (!isCoord ? ' active-green' : '');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ===================== EVENTS =====================
 document.querySelectorAll('.radio-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
     var group = btn.closest('.radio-group');
-    var isGreen = document.getElementById('screen-part').classList.contains('active');
-    var activeClass = isGreen ? 'active-green' : 'active-blue';
-    group.querySelectorAll('.radio-btn').forEach(function(b) {
-      b.classList.remove('active-blue', 'active-green');
-    });
-    btn.classList.add(activeClass);
+    var green = document.getElementById('screen-part').classList.contains('active');
+    var cls   = green ? 'active-green' : 'active-blue';
+    group.querySelectorAll('.radio-btn').forEach(function(b) { b.classList.remove('active-blue','active-green'); });
+    btn.classList.add(cls);
     radioValues[group.id] = btn.dataset.value;
   });
 });
 
-// ---- SCALE BUTTONS ----
-var scaleValues = {};
 document.querySelectorAll('.scale-row').forEach(function(row) {
   row.querySelectorAll('.scale-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      row.querySelectorAll('.scale-btn').forEach(function(b) {
-        b.classList.remove('active-blue', 'active-green');
-      });
+      row.querySelectorAll('.scale-btn').forEach(function(b) { b.classList.remove('active-blue','active-green'); });
       btn.classList.add('active-green');
       scaleValues[row.id] = btn.dataset.val;
     });
   });
 });
 
-// ---- STAR RATING ----
-var starValues = {};
 document.querySelectorAll('.star-row').forEach(function(row) {
   row.querySelectorAll('.star-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -537,167 +653,177 @@ document.querySelectorAll('.star-row').forEach(function(row) {
   });
 });
 
-// ---- HELPERS ----
-function val(id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; }
+// ===================== HELPERS =====================
+function v(id)  { var e = document.getElementById(id); return e ? e.value.trim() : ''; }
 function rv(id) { return radioValues[id] || '—'; }
-function sv(id) { return starValues[id] ? '★'.repeat(starValues[id]) + '☆'.repeat(5 - starValues[id]) : '—'; }
-function scv(id) { return scaleValues[id] ? scaleValues[id] + '/10' : '—'; }
+function sv(id) { return starValues[id]  ? '★'.repeat(starValues[id]) + '☆'.repeat(5-starValues[id]) : '—'; }
+function scv(id){ return scaleValues[id] ? scaleValues[id]+'/10' : '—'; }
+function line(label, val) { return val && val !== '—' ? label + ': ' + val + '\n' : ''; }
 
-function getCheckedCoord() {
+function getCheckedSpeakers() {
   var s = [];
-  ['c-s-bitova','c-s-portnova','c-s-zabl','c-s-kantor','c-s-sisneva'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el && el.checked) s.push(el.parentElement.textContent.trim());
+  document.querySelectorAll('#c-speakers-list input[type=checkbox]').forEach(function(cb) {
+    if (cb.checked) s.push(cb.parentElement.textContent.trim());
   });
   return s;
 }
 
-// ---- GENERATE COORDINATOR ----
+// ===================== GENERATE COORD =====================
 function generateCoord() {
-  var speakers = getCheckedCoord();
+  var speakers = getCheckedSpeakers();
   var r = 'ЕЖЕДНЕВНЫЙ ОТЧЁТ КООРДИНАТОРА\n';
-  r += 'Семинар «Пространство Новых Идей 2.0», Ижевск\n';
+  r += cfg.event + (cfg.city ? ', ' + cfg.city : '') + '\n';
   r += 'Дата: ' + rv('c-day-group') + '\n';
-  r += '—'.repeat(32) + '\n\n';
+  r += '—'.repeat(34) + '\n\n';
 
   r += 'ЛОГИСТИКА\n';
-  r += 'Прибытие: ' + rv('c-arrived-group') + '\n';
-  if (val('c-logistics-detail')) r += 'Подробности: ' + val('c-logistics-detail') + '\n';
-  r += 'Трансферы: ' + rv('c-transfer-group') + '\n';
-  r += 'Размещение: ' + rv('c-hotel-group') + '\n';
-  if (val('c-hotel-detail')) r += val('c-hotel-detail') + '\n';
+  r += line('Прибытие',  rv('c-arrived-group'));
+  if (v('c-logistics-detail')) r += v('c-logistics-detail') + '\n';
+  r += line('Трансферы', rv('c-transfer-group'));
+  r += line('Размещение',rv('c-hotel-group'));
+  if (v('c-hotel-detail')) r += v('c-hotel-detail') + '\n';
   r += '\n';
 
   r += 'ПРОГРАММА\n';
-  r += 'По плану: ' + rv('c-program-group') + '\n';
-  if (val('c-program-detail')) r += val('c-program-detail') + '\n';
-  if (speakers.length) r += 'Выступили спикеры: ' + speakers.join(', ') + '\n';
+  r += line('По плану', rv('c-program-group'));
+  if (v('c-program-detail')) r += v('c-program-detail') + '\n';
+  if (speakers.length) r += 'Выступили: ' + speakers.join(', ') + '\n';
   r += '\n';
 
   r += 'УЧАСТНИКИ\n';
-  r += 'Настрой: ' + rv('c-mood-group') + '\n';
-  r += 'Вовлечённость: ' + rv('c-engagement-group') + '\n';
-  if (val('c-participants-detail')) r += val('c-participants-detail') + '\n';
+  r += line('Настрой',       rv('c-mood-group'));
+  r += line('Вовлечённость', rv('c-engagement-group'));
+  if (v('c-participants-detail')) r += v('c-participants-detail') + '\n';
   r += '\n';
 
   r += 'КОММУНИКАЦИЯ\n';
-  r += 'Реакция принимающей стороны: ' + rv('c-reception-group') + '\n';
-  if (val('c-contacts-detail')) r += 'Контакты: ' + val('c-contacts-detail') + '\n';
-  if (val('c-nko-detail')) r += 'НКО: ' + val('c-nko-detail') + '\n';
+  r += line('Реакция принимающей стороны', rv('c-reception-group'));
+  if (v('c-contacts-detail')) r += 'Контакты: ' + v('c-contacts-detail') + '\n';
+  if (v('c-nko-detail'))      r += 'НКО: '      + v('c-nko-detail')      + '\n';
   r += '\n';
 
-  if (rv('c-incidents-group') === 'Да' || val('c-incidents-detail') || val('c-budget')) {
+  if (rv('c-incidents-group') === 'Да' || v('c-incidents-detail') || v('c-budget')) {
     r += 'РИСКИ И РАСХОДЫ\n';
-    if (rv('c-incidents-group') !== '—') r += 'Инциденты: ' + rv('c-incidents-group') + '\n';
-    if (val('c-incidents-detail')) r += val('c-incidents-detail') + '\n';
-    if (val('c-budget')) r += 'Расходы: ' + val('c-budget') + '\n';
+    r += line('Инциденты', rv('c-incidents-group'));
+    if (v('c-incidents-detail')) r += v('c-incidents-detail') + '\n';
+    if (v('c-budget'))           r += 'Расходы: ' + v('c-budget') + '\n';
     r += '\n';
   }
 
-  r += 'НА ЗАВТРА\n';
-  r += (val('c-tomorrow-detail') || 'Открытых вопросов нет') + '\n\n';
+  r += 'НА ЗАВТРА\n' + (v('c-tomorrow-detail') || 'Открытых вопросов нет') + '\n\n';
+  if (v('c-summary')) r += 'ИТОГ ДНЯ\n' + v('c-summary') + '\n';
+  r += 'Оценка: ' + sv('c-stars') + '\n\n';
+  r += '— ' + cfg.coordinator + ', координатор';
 
-  if (val('c-summary')) r += 'ИТОГ ДНЯ\n' + val('c-summary') + '\n';
-  r += 'Оценка дня: ' + sv('c-stars') + '\n\n';
-  r += '— Даутова Наталья, координатор ЦЛП';
-
-  document.getElementById('result-text').textContent = r;
-  var rc = document.getElementById('c-result-card');
-  rc.style.display = 'block';
-  setTimeout(function() { rc.scrollIntoView({ behavior:'smooth', block:'start' }); }, 50);
+  show('c-result-text', r, 'c-result-card');
 }
 
-// ---- GENERATE PARTICIPANT ----
+// ===================== GENERATE PART =====================
 function generatePart() {
-  var name = val('p-name') || 'Участник';
+  var name = v('p-name') || 'Участник';
   var r = 'ОТЧЁТ УЧАСТНИКА\n';
-  r += 'Семинар «Пространство Новых Идей 2.0», Ижевск\n';
+  r += cfg.event + (cfg.city ? ', ' + cfg.city : '') + '\n';
   r += 'Участник: ' + name + '\n';
   r += 'Дата: ' + rv('p-day-group') + '\n';
-  r += '—'.repeat(32) + '\n\n';
+  r += '—'.repeat(34) + '\n\n';
 
   r += 'ЛОГИСТИКА\n';
-  r += 'Прибытие: ' + rv('p-arrived-group') + '\n';
-  if (val('p-logistics-detail')) r += val('p-logistics-detail') + '\n';
-  r += 'Размещение: ' + rv('p-hotel-group') + '\n';
-  if (val('p-hotel-detail')) r += val('p-hotel-detail') + '\n';
-  r += 'Питание: ' + rv('p-food-group') + '\n\n';
+  r += line('Прибытие',  rv('p-arrived-group'));
+  if (v('p-logistics-detail')) r += v('p-logistics-detail') + '\n';
+  r += line('Размещение', rv('p-hotel-group'));
+  if (v('p-hotel-detail')) r += v('p-hotel-detail') + '\n';
+  r += line('Питание', rv('p-food-group'));
+  r += '\n';
 
   r += 'ПРОГРАММА\n';
-  if (val('p-attended')) r += 'Посетил(-а): ' + val('p-attended') + '\n';
+  if (v('p-attended')) r += 'Посетил(-а): ' + v('p-attended') + '\n';
   r += 'Оценка программы: ' + scv('p-program-scale') + '\n';
-  if (val('p-best')) r += 'Самое ценное: ' + val('p-best') + '\n';
-  if (val('p-improve-program')) r += 'Что улучшить: ' + val('p-improve-program') + '\n';
+  if (v('p-best'))            r += 'Самое ценное: '  + v('p-best')            + '\n';
+  if (v('p-improve-program')) r += 'Улучшить: '      + v('p-improve-program') + '\n';
   r += '\n';
 
-  r += 'ИНСАЙТЫ И ИДЕИ\n';
-  if (val('p-insights')) r += val('p-insights') + '\n';
-  if (val('p-apply')) r += 'Применю в работе: ' + val('p-apply') + '\n';
-  if (val('p-questions')) r += 'Вопросы: ' + val('p-questions') + '\n';
+  r += 'ИНСАЙТЫ\n';
+  if (v('p-insights')) r += v('p-insights') + '\n';
+  if (v('p-apply'))    r += 'Применю: ' + v('p-apply') + '\n';
+  if (v('p-questions'))r += 'Вопросы: ' + v('p-questions') + '\n';
   r += '\n';
 
-  if (val('p-contacts') || val('p-partners')) {
+  if (v('p-contacts') || v('p-partners')) {
     r += 'КОНТАКТЫ\n';
-    if (val('p-contacts')) r += val('p-contacts') + '\n';
-    if (val('p-partners')) r += 'Потенциальные партнёры: ' + val('p-partners') + '\n';
+    if (v('p-contacts'))  r += v('p-contacts') + '\n';
+    if (v('p-partners'))  r += 'Партнёры: ' + v('p-partners') + '\n';
     r += '\n';
   }
 
   r += 'СОСТОЯНИЕ\n';
-  r += 'Энергия: ' + rv('p-energy-group') + '\n';
-  r += 'Настрой: ' + rv('p-mood-group') + '\n';
-  if (val('p-better')) r += 'Пожелания: ' + val('p-better') + '\n';
+  r += line('Энергия', rv('p-energy-group'));
+  r += line('Настрой', rv('p-mood-group'));
+  if (v('p-better')) r += 'Пожелания: ' + v('p-better') + '\n';
   r += '\n';
 
-  if (val('p-summary')) r += 'ИТОГ: ' + val('p-summary') + '\n';
+  if (v('p-summary')) r += 'ИТОГ: ' + v('p-summary') + '\n';
   r += 'Оценка дня: ' + sv('p-stars') + '\n\n';
   r += '— ' + name;
 
-  document.getElementById('result-text-p').textContent = r;
-  var rc = document.getElementById('p-result-card');
+  show('p-result-text', r, 'p-result-card');
+}
+
+function show(textId, text, cardId) {
+  document.getElementById(textId).textContent = text;
+  var rc = document.getElementById(cardId);
   rc.style.display = 'block';
   setTimeout(function() { rc.scrollIntoView({ behavior:'smooth', block:'start' }); }, 50);
 }
 
-// ---- COPY ----
+// ===================== SEND EMAIL =====================
+function sendEmail(textId, emailId) {
+  var text  = document.getElementById(textId).textContent;
+  var email = document.getElementById(emailId).value.trim();
+  if (!email) { alert('Введи email адрес'); return; }
+  var subject = encodeURIComponent('Отчёт — ' + cfg.event + (cfg.city ? ', ' + cfg.city : ''));
+  var body    = encodeURIComponent(text);
+  window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+}
+
+// ===================== COPY =====================
 function copyReport(textId, btnId, labelId, iconId) {
   var text = document.getElementById(textId).textContent;
-  var btn = document.getElementById(btnId);
-
+  var btn  = document.getElementById(btnId);
   function onCopied() {
     btn.classList.add('copied');
-    document.getElementById(iconId).textContent = '✅';
+    document.getElementById(iconId).textContent  = '✅';
     document.getElementById(labelId).textContent = 'Скопировано!';
     setTimeout(function() {
       btn.classList.remove('copied');
-      document.getElementById(iconId).textContent = '📋';
-      document.getElementById(labelId).textContent = 'Скопировать';
+      document.getElementById(iconId).textContent  = '📋';
+      document.getElementById(labelId).textContent = 'Скопировать текст';
     }, 2200);
   }
-
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(onCopied).catch(function() { fallbackCopy(text); onCopied(); });
-  } else { fallbackCopy(text); onCopied(); }
+    navigator.clipboard.writeText(text).then(onCopied).catch(function() { fbCopy(text); onCopied(); });
+  } else { fbCopy(text); onCopied(); }
 }
-
-function fallbackCopy(text) {
+function fbCopy(text) {
   var ta = document.createElement('textarea');
-  ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+  ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
   document.body.appendChild(ta); ta.focus(); ta.select();
   document.execCommand('copy'); document.body.removeChild(ta);
 }
 
-// ---- RESET ----
+// ===================== RESET =====================
 function resetForm(role) {
-  var prefix = role === 'coord' ? 'c-' : 'p-';
   var screen = document.getElementById('screen-' + role);
-  screen.querySelectorAll('textarea, input[type=text]').forEach(function(el) { el.value = ''; });
-  screen.querySelectorAll('.radio-btn').forEach(function(b) { b.classList.remove('active-blue','active-green'); });
-  screen.querySelectorAll('.scale-btn').forEach(function(b) { b.classList.remove('active-blue','active-green'); });
-  screen.querySelectorAll('.star-btn').forEach(function(b) { b.classList.remove('lit'); });
+  screen.querySelectorAll('textarea, input[type=text], input[type=email]').forEach(function(el) { el.value = ''; });
+  screen.querySelectorAll('.radio-btn').forEach(function(b)  { b.classList.remove('active-blue','active-green'); });
+  screen.querySelectorAll('.scale-btn').forEach(function(b)  { b.classList.remove('active-blue','active-green'); });
+  screen.querySelectorAll('.star-btn').forEach(function(b)   { b.classList.remove('lit'); });
   screen.querySelectorAll('input[type=checkbox]').forEach(function(c) { c.checked = false; });
-  document.getElementById((role === 'coord' ? 'c' : 'p') + '-result-card').style.display = 'none';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById(role === 'coord' ? 'c-result-card' : 'p-result-card').style.display = 'none';
+  if (cfg.email) {
+    var emailField = document.getElementById(role === 'coord' ? 'c-email' : 'p-email');
+    if (emailField) emailField.value = cfg.email;
+  }
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 </script>
 </body>
